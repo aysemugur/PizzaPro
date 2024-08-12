@@ -1,52 +1,11 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color: #213547;
-  background-color: #ffffff;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #747bff;
-}
-
-body {
+body{
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #f9f9f9;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+  padding:0;
+  font-family: Roboto Condensed,
+  Barlow,
+  Quattrocento,
+  Satisfy;
+  background-color: #CE2829;
+  background-image: url("https://s3-alpha-sig.figma.com/img/2b78/c96a/4a4acb450e3bbb3750c05c017efa1f61?Expires=1724630400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ZA1BTpO-ZAKR74wRI9jYyvNYBF3X2Nio-slH3SxdWBpBumNdEz8aDOZsiJJbq0tU47rJVIzKnwalV~AV21mYT3~GwUJY4jitKnR380es2Vctrq7DCK2Ahtkh-bqRhfHohT288bJWzBEbRoCj0A6hK8MfX4yJf1AcVS8Mkpx7lkOshkGDbNbvBZo1U3ZTvFayBXQi-64EXezi18P72MiKYb1x0ZA8EKJG~aJEe8~t50nEPTPnRGCDiJk1sle5yZeaN3PXil5xjBdBTrNE4P2LrQweJ2OKMfgj9qGy4WSd05ZIerwDvLw3U8s1yAW9OYASHJWGEzbpqw2V40-Cv9l9kA__");
+  background-repeat: no-repeat;
+} 
