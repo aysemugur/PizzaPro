@@ -10,11 +10,14 @@ function Home() {
   }
 
   return (
+    <div>
    <div className='mainContent'>
     <h2>Teknolojik Yemekler</h2>
-    <h1>KOD ACIKTIRIR, PIZZA DOYURUR</h1>
-    <Button color="warning" onClick={handleOrderPizza}>ACIKTIM</Button>
-    </div>
+    <h1>KOD ACIKTIRIR PIZZA, DOYURUR</h1>
+    <Button color="warning" onClick={handleOrderPizza} className='button'>ACIKTIM</Button>
+  </div>
+   <div className='back-image'></div>
+   </div>
   )
 }
 
