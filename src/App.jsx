@@ -1,16 +1,16 @@
-
+import Home from './pages/Home.jsx'
 import { Route, Switch } from 'react-router-dom';
-import './App.css'
 import OrderPizza from './pages/OrderPizza'
 import Success from './pages/Success'
 
-function App() {
-  
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
+
+function App() {
   return (
     <>
      <Switch>
-      <p>Welcome</p>
       <Route exact path="/">
         <Home />
       </Route>
@@ -21,7 +21,6 @@ function App() {
         <Success />
       </Route>
      </Switch>
-  
     </>
   )
 }
