@@ -109,7 +109,7 @@ body{
     font-size: 20px;
   }
   .ptext{
-    margin-bottom: 40px;
+    margin-bottom: 24px;
     margin-top: 12px;
   }
   .required-star{
@@ -134,8 +134,64 @@ body{
      color:#292929;
      font-weight: 600;
   }
-  .ekmalzemeler{
+  .ekmalz{
+    margin-top: 18px;
+    margin-bottom: 30px;
+  }
+  .eklist{
+    display: flex;
+    flex-direction: row;
+    margin-top: 16px;
     margin-bottom:40px;
   }
+  .eksol{
+   display: flex;
+   flex-direction: column;
+   gap:20px;
+  }
+  #not{
+    margin-top: 10px;
+    border-radius: 6px;
+    border: 1px solid #d9d9d9;
+    width: 420px;
+    height: 69px;
+    color: #5f5f5f;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 40px;
+  }
+
+  .line{
+    width: 419.2px;
+    color: #5f5f5f;
+    border: 1px solid;
+    opacity: .5;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  .board{
+    width: 420px;
+    height: 202px;
+    border: 1px solid #d9d9d9 ;
+    border-radius: 6px;
+    padding:40px;
+  }
   
+  th{
+    width: 200px;
+    height: 40px;
+  }
+  td{
+    width: 200px;
+  }
+  .sm{
+    font-size: 20px;
+  }
+  tr{
+    height: 0px;
+    text-align: center;
+    vertical-align: top;
+  }
+
 }

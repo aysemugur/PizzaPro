@@ -1,4 +1,4 @@
-import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+import { Button, Form, FormGroup, Input,Table, Label } from "reactstrap";
 import {useState} from 'react';
 import styled from "styled-components";
 
@@ -113,7 +113,108 @@ function OrderForm (){
         <div className="ekmalzemeler">
             <Label for="ekmalz" className="boyut-text" >Ek Malzemeler</Label>
             <p className="ekmalz">En fazla 10 malzeme secebilirsiniz. 5₺</p>
-            
+
+            <div className="eklist">
+            <div className="eksol">
+            <FormGroup check inline>
+                <Input type="checkbox" />
+                <Label check>Pepperoni</Label>
+            </FormGroup>
+            <FormGroup check inline>
+              <Input type="checkbox" />
+              <Label check>Kanada Jambonu</Label>
+            </FormGroup>
+            <FormGroup check inline>
+                <Input type="checkbox" />
+                <Label check>Soğan</Label>
+            </FormGroup>
+            <FormGroup check inline>
+              <Input type="checkbox" />
+              <Label check>Mısır</Label>
+            </FormGroup>
+            <FormGroup check inline>
+                <Input type="checkbox" />
+                <Label check>Jalepeno</Label>
+            </FormGroup>
+            <FormGroup check inline>
+              <Input type="checkbox" />
+              <Label check>Biber</Label>
+            </FormGroup>
+            <FormGroup check inline>
+              <Input type="checkbox" />
+              <Label check>Ananas</Label>
+            </FormGroup>
+            </div>
+
+            <div className="eksol">
+            <FormGroup check inline>
+                <Input type="checkbox" />
+                <Label check>Sosis</Label>
+            </FormGroup>
+            <FormGroup check inline>
+              <Input type="checkbox" />
+              <Label check>Tavuk Izgara</Label>
+            </FormGroup>
+            <FormGroup check inline>
+                <Input type="checkbox" />
+                <Label check>Domates</Label>
+            </FormGroup>
+            <FormGroup check inline>
+              <Input type="checkbox" />
+              <Label check>Sucuk</Label>
+            </FormGroup>
+            <FormGroup check inline>
+                <Input type="checkbox" />
+                <Label check>Sarımsak</Label>
+            </FormGroup>
+            <FormGroup check inline>
+              <Input type="checkbox" />
+              <Label check>Sucuk</Label>
+            </FormGroup>
+            <FormGroup check inline>
+              <Input type="checkbox" />
+              <Label check>Kabak</Label>
+            </FormGroup>
+            </div>
+            </div>
+
+            <FormGroup>
+                <Label for="not"className="boyut-text">
+                Sipariş Notu
+                </Label>
+                <Input
+                id="not"
+                name="not"
+                placeholder="Siparişine eklemek istediğin bir not var mı?"
+                />
+            </FormGroup>
+          
+            <div className="line"></div>
+
+            <div className="board">
+            <Table className="table"
+                borderless
+                size="sm"
+                >
+                <thead>
+                    <tr><th><p className="boyut-text sm" >Sipariş Toplamı</p></th></tr></thead>
+                <tbody>
+                   
+                    <tr>
+                    <th>Seçimler</th>
+                    <td>25.50₺</td>
+                    </tr>
+                    <tr>
+                    <th>Toplam</th>
+                    <td>110.50₺</td>
+                    </tr>
+                   
+        
+                </tbody>
+            </Table>
+            </div>
+        
+
     
         </div>
     </FormArea>
