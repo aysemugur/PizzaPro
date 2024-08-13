@@ -1,9 +1,11 @@
-import React from 'react'
+import OrderForm from '../components/OrderForm';
+import React from 'react';
+
 
 function OrderPizza() {
   return (
-    <div className='body-homepage'>OrderPizza</div>
+    <OrderForm />
   )
 }
 
-export default OrderPizza
+export default OrderPizza;

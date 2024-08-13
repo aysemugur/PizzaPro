@@ -1,7 +1,7 @@
 import Home from './pages/Home.jsx'
 import { Route, Switch } from 'react-router-dom';
-import OrderPizza from './pages/OrderPizza'
-import Success from './pages/Success'
+import OrderPizza from './pages/OrderPizza';
+import Success from './pages/Success';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -25,4 +25,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
