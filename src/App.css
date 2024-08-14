@@ -1,18 +1,21 @@
 
 @media (max-width:540px) {
-  
 
 body{
+  min-height:1080px;
+    max-height: 1917px;
     margin: 0;
     padding:0;
     font-size: 16px;
-    background-color: rgba(206, 40, 41, 1);
     color:rgba(41,41,41,1);
     font-family: Roboto Condensed,
     Barlow,
     Quattrocento,
     Satisfy;
+    background-color: #ce2829;
   } 
+
+  
 
   .mainContent{
     color: rgb(255,255,255,1);
@@ -36,6 +39,7 @@ body{
     width: 100%;
     margin: 0;
     height: 600px;
+    
   }
 
   h2{
@@ -67,6 +71,9 @@ body{
 
   /* OrderForm COMP */
 
+  .orderpage{
+    background-color: #fff;
+  }
   .aciklama{
     position: absolute;
     left:60px;
@@ -176,8 +183,9 @@ body{
     border: 1px solid #d9d9d9 ;
     border-radius: 6px;
     padding:40px;
+    margin-bottom: 40px;
   }
-  
+
   th{
     width: 200px;
     height: 40px;
@@ -192,6 +200,51 @@ body{
     height: 0px;
     text-align: center;
     vertical-align: top;
+  }
+  .buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .buttongroup{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 200px;
+    height: 56px;
+    border: 1px solid #d9d9d9;
+    border-radius: 0 6px 6px 0;
+    justify-content: space-between;
+
+
+  }
+  .opr{
+    width: 66.67px;
+    height: 56px;
+    background-color: #fdc913;
+    font-size: 22px;
+    font-weight: 700;
+   
+
+  }
+  .disp{
+    font-size: 22px;
+    font-weight: 400;
+    font-family: Barlow;
+    color: black;
+    padding-top:16px;
+  }
+  .btn-lg{
+    font-size: 18px;
+    font-weight: 500;
+    height: 56px;
+    background-color: #fdc913;
+    margin-right: 22px;
+    padding: 16px 32px;
+    flex: 1;
+    
+
   }
 
 }
