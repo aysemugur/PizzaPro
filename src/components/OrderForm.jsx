@@ -1,58 +1,167 @@
-import { Button, Form, FormGroup, Input, Table, Label } from "reactstrap";
+import { Button, FormGroup, Input, Table, Label } from "reactstrap";
 import { useState } from "react";
-import styled from "styled-components";
-
-const FormArea = styled.form`
-  min-width: 420px;
-  padding: 28px;
-  font-size: 20px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: no-wrap;
-  flex-direction: column;
-  font-family: Barlow;
-  font-weight: 400;
-`;
-const HeaderTop = styled.div`
-  background-color: rgba(206, 40, 41, 1);
-  padding: 5rem;
-  color: white;
-  font-size: 20px;
-  justify-content: center;
-  min-width: 540px;
-`;
 
 function OrderForm() {
-  const [formData, setFormData] = useState();
-  const [errors, setErrors] = useState("");
-  const [count, setCount] = useState(0);
-  const [checkbox, setCheckBox] = useState(0);
+  const initialIngredients = [
+    "Pepperoni",
+    "Kanada Jambonu",
+    "Soğan",
+    "Mısır",
+    "Jalepeno",
+    "Biber",
+    "Ananas",
+    "Sosis",
+    "Tavuk Izgara",
+    "Domates",
+    "Sucuk",
+    "Sarımsak",
+    "Kabak",
+    "Mantar",
+  ];
+
+  const [state, setState] = useState({
+    count: 0,
+    checkboxSelections: [],
+    errors: "",
+    availableIngredients: initialIngredients,
+    size: "",
+    doughThickness: "",
+    specialNote: "",
+    total: 85.5,
+    choose: 0,
+  });
+
+  const handleSpecialNoteChange = (event) => {
+    const value = event.target.value;
+    setState((prevState) => ({
+      ...prevState,
+      specialNote: value,
+    }));
+  };
 
   const increaseCount = () => {
-    setCount(count + 1);
+    setState((prevState) => ({
+      ...prevState,
+      count: prevState.count + 1,
+    }));
   };
+
   const decreaseCount = () => {
-    setCount(count - 1);
+    setState((prevState) => ({
+      ...prevState,
+      count: Math.max(prevState.count - 1, 0),
+    }));
+  };
+
+  const calculatePrice = (checkboxSelections) => {
+    const price = 5;
+    return checkboxSelections.length * price;
   };
 
   const handleCheckboxes = (event) => {
+    const value = event.target.value;
+    let updatedSelections = state.checkboxSelections;
+
     if (event.target.checked) {
-      setCheckBox(checkbox + 1); // Checkbox işaretlendiğinde sayacı artırın
+      updatedSelections = [...updatedSelections, value];
     } else {
-      setCheckBox(checkbox - 1); // Checkbox işareti kaldırıldığında sayacı azaltın
-      console.log();
+      updatedSelections = updatedSelections.filter((item) => item !== value);
+    }
+
+    const newChoosePrice = calculatePrice(updatedSelections);
+
+    setState((prevState) => ({
+      ...prevState,
+      checkboxSelections: updatedSelections,
+      choose: newChoosePrice,
+      total: 85.5 + newChoosePrice,
+    }));
+  };
+
+  const handleDoughThicknessChange = (event) => {
+    const value = event.target.value;
+    setState((prevState) => ({
+      ...prevState,
+      doughThickness: value,
+    }));
+  };
+
+  const handleSizeChange = (event) => {
+    const value = event.target.value;
+    setState((prevState) => ({
+      ...prevState,
+      size: value,
+    }));
+  };
+
+  const validateForm = () => {
+    const { size, doughThickness, checkboxSelections, count } = state;
+    let errors = "";
+
+    if (!size) {
+      errors += "Lütfen pizza boyutunu seçin. ";
+    }
+    if (!doughThickness) {
+      errors += "Lütfen hamur kalınlığını seçin. ";
+    }
+    if (checkboxSelections.length < 4 || checkboxSelections.length > 10) {
+      errors += "Lütfen 4 ila 10 arasında malzeme seçin. ";
+    }
+    if (count < 1) {
+      errors += "Lütfen en az bir pizza ekleyin. ";
+    }
+    if (errors) {
+      setState((prevState) => ({
+        ...prevState,
+        errors: errors,
+      }));
+      return false;
+    }
+
+    return true;
+  };
+
+  const submitOrder = async (event) => {
+    event.preventDefault(); //
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      errors: "",
+    }));
+
+    const orderData = {
+      size: state.size,
+      doughThickness: state.doughThickness,
+      ingredients: state.checkboxSelections,
+      count: state.count,
+    };
+
+    try {
+      const response = await axios.post(
+        "https://reqres.in/api/pizza",
+        orderData
+      );
+      console.log("API Response:", response.data);
+      alert("Siparişiniz başarıyla gönderildi!");
+    } catch (error) {
+      console.error("API Error:", error);
+      alert("Siparişiniz gönderilirken bir hata oluştu.");
     }
   };
 
   return (
     <div className="orderpage">
-      <HeaderTop>
+      <div className="headertop">
         <h2>Teknolojik Yemekler</h2>
         <p className="aciklama">
           Anasayfa - <b>Sipariş Oluştur</b>
         </p>
-      </HeaderTop>
-      <FormArea>
+      </div>
+      <form className="form" onSubmit={submitOrder}>
         <p className="pizzatitle">Position Absolute Acı Pizza</p>
         <div className="rating">
           <p>85.50₺</p>
@@ -75,28 +184,58 @@ function OrderForm() {
         </div>
         <div className="secbar">
           <div className="boyut-sec">
-            <Label for="exampleEmail" className="boyut-text">
+            <Label for="" className="boyut-text">
               Boyut Seç
               <span className="required-star"> *</span>
             </Label>
             <FormGroup check>
-              <Input name="radio1" type="radio" /> <Label check>Küçük</Label>
+              <Input
+                name="size"
+                type="radio"
+                value="Küçük"
+                onChange={handleSizeChange}
+                checked={state.size === "Küçük"}
+              />{" "}
+              <Label check>Küçük</Label>
             </FormGroup>
             <FormGroup check>
-              <Input name="radio1" type="radio" /> <Label check>Orta</Label>
+              <Input
+                name="size"
+                type="radio"
+                value="Orta"
+                onChange={handleSizeChange}
+                checked={state.size === "Orta"}
+              />{" "}
+              <Label check>Orta</Label>
             </FormGroup>
             <FormGroup check>
-              <Input name="radio1" type="radio" /> <Label check>Büyük</Label>
+              <Input
+                name="size"
+                type="radio"
+                value="Büyük"
+                onChange={handleSizeChange}
+                checked={state.size === "Büyük"}
+              />{" "}
+              <Label check>Büyük</Label>
             </FormGroup>
           </div>
-          <div className="boyut-sec">
+          <div className="">
             <FormGroup>
-              <Label for="exampleEmail" className="boyut-text">
+              <Label for="doughThickness" className="boyut-text">
                 Hamur Seç
                 <span className="required-star"> *</span>
               </Label>
-              <Input id="exampleSelect" name="select" type="select">
+              <Input
+                id="doughThickness"
+                name="doughThickness"
+                type="select"
+                onChange={handleDoughThicknessChange}
+                value={state.doughThickness}
+              >
                 <option>Hamur Kalınlığı</option>
+                <option>İnce</option>
+                <option>Orta</option>
+                <option>Kalın</option>
               </Input>
             </FormGroup>
           </div>
@@ -109,121 +248,38 @@ function OrderForm() {
 
           <div className="eklist">
             <div className="eksol">
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Pepperoni</Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Kanada Jambonu</Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Soğan</Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Mısır</Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Jalepeno</Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Biber</Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Ananas</Label>
-              </FormGroup>
+              {state.availableIngredients
+                .slice(0, 7)
+                .map((ingredient, index) => (
+                  <FormGroup check inline key={index}>
+                    <Input
+                      type="checkbox"
+                      value={ingredient}
+                      onChange={handleCheckboxes}
+                      disabled={
+                        state.checkboxSelections.length >= 10 &&
+                        !state.checkboxSelections.includes(ingredient)
+                      }
+                    />
+                    <Label check>{ingredient}</Label>
+                  </FormGroup>
+                ))}
             </div>
-
             <div className="eksol">
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Sosis</Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Tavuk Izgara</Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Domates</Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Sucuk</Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Sarımsak</Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Sucuk</Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="checkbox"
-                  onChange={handleCheckboxes}
-                  disabled={checkbox > 10}
-                />
-                <Label check>Kabak</Label>
-              </FormGroup>
+              {state.availableIngredients.slice(7).map((ingredient, index) => (
+                <FormGroup check inline key={index + 7}>
+                  <Input
+                    type="checkbox"
+                    value={ingredient}
+                    onChange={handleCheckboxes}
+                    disabled={
+                      state.checkboxSelections.length >= 10 &&
+                      !state.checkboxSelections.includes(ingredient)
+                    }
+                  />
+                  <Label check>{ingredient}</Label>
+                </FormGroup>
+              ))}
             </div>
           </div>
 
@@ -235,6 +291,8 @@ function OrderForm() {
               id="not"
               name="not"
               placeholder="Siparişine eklemek istediğin bir not var mı?"
+              value={state.specialNote}
+              onChange={handleSpecialNoteChange}
             />
           </FormGroup>
 
@@ -252,11 +310,12 @@ function OrderForm() {
               <tbody>
                 <tr>
                   <th>Seçimler</th>
-                  <td>25.50₺</td>
+                  <td>{state.choose}₺</td>
                 </tr>
+
                 <tr>
                   <th>Toplam</th>
-                  <td>110.50₺</td>
+                  <td>{state.total}₺</td>
                 </tr>
               </tbody>
             </Table>
@@ -272,7 +331,7 @@ function OrderForm() {
               >
                 -
               </Button>
-              <p className="disp">{count}</p>
+              <p className="disp">{state.count}</p>
               <Button
                 color="warning"
                 size="sm"
@@ -288,13 +347,20 @@ function OrderForm() {
               size="lg"
               onClick={decreaseCount}
               className="btn-lg"
-              disabled={checkbox < 4 || checkbox > 10 || count <= 0}
+              disabled={
+                state.checkboxSelections.length < 4 ||
+                state.checkboxSelections.length > 10 ||
+                state.count < 1 ||
+                !state.size ||
+                !state.doughThickness ||
+                !state.errors
+              }
             >
               SİPARİŞ VER
             </Button>
           </div>
         </div>
-      </FormArea>
+      </form>
     </div>
   );
 }

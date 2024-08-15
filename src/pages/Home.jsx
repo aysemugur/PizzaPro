@@ -10,7 +10,7 @@ function Home() {
   };
 
   return (
-    <div>
+    <div className="fullpage">
       <div className="mainContent">
         <h2>Teknolojik Yemekler</h2>
         <h1>KOD ACIKTIRIR PIZZA, DOYURUR</h1>
