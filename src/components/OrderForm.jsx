@@ -1,5 +1,6 @@
 import { Button, FormGroup, Input, Table, Label } from "reactstrap";
 import { useState } from "react";
+import axios from "axios";
 
 function OrderForm() {
   const initialIngredients = [
@@ -20,7 +21,7 @@ function OrderForm() {
   ];
 
   const [state, setState] = useState({
-    count: 0,
+    count: 1,
     checkboxSelections: [],
     errors: "",
     availableIngredients: initialIngredients,
@@ -31,6 +32,11 @@ function OrderForm() {
     choose: 0,
   });
 
+  const calculatePrice = (checkboxSelections, count) => {
+    const price = 5;
+    return checkboxSelections.length * price * count;
+  };
+
   const handleSpecialNoteChange = (event) => {
     const value = event.target.value;
     setState((prevState) => ({
@@ -40,22 +46,38 @@ function OrderForm() {
   };
 
   const increaseCount = () => {
-    setState((prevState) => ({
-      ...prevState,
-      count: prevState.count + 1,
-    }));
+    setState((prevState) => {
+      const newCount = prevState.count + 1;
+      const newChoosePrice = calculatePrice(
+        prevState.checkboxSelections,
+        newCount
+      );
+      const newTotal = 85.5 * newCount + newChoosePrice;
+      return {
+        ...prevState,
+        count: newCount,
+        choose: newChoosePrice,
+        total: newTotal,
+      };
+    });
   };
 
   const decreaseCount = () => {
-    setState((prevState) => ({
-      ...prevState,
-      count: Math.max(prevState.count - 1, 0),
-    }));
-  };
+    setState((prevState) => {
+      const newCount = Math.max(prevState.count - 1, 1);
+      const newChoosePrice = calculatePrice(
+        prevState.checkboxSelections,
+        newCount
+      );
+      const newTotal = 85.5 * newCount + newChoosePrice;
 
-  const calculatePrice = (checkboxSelections) => {
-    const price = 5;
-    return checkboxSelections.length * price;
+      return {
+        ...prevState,
+        count: newCount,
+        choose: newChoosePrice,
+        total: newTotal,
+      };
+    });
   };
 
   const handleCheckboxes = (event) => {
@@ -68,13 +90,13 @@ function OrderForm() {
       updatedSelections = updatedSelections.filter((item) => item !== value);
     }
 
-    const newChoosePrice = calculatePrice(updatedSelections);
+    const newChoosePrice = calculatePrice(updatedSelections, state.count);
 
     setState((prevState) => ({
       ...prevState,
       checkboxSelections: updatedSelections,
       choose: newChoosePrice,
-      total: 85.5 + newChoosePrice,
+      total: 85.5 * prevState.count + newChoosePrice,
     }));
   };
 
@@ -138,7 +160,11 @@ function OrderForm() {
       doughThickness: state.doughThickness,
       ingredients: state.checkboxSelections,
       count: state.count,
+      choose: state.choose,
+      total: state.total,
     };
+
+    console.log("Sipariş gönderiliyor:", orderData);
 
     try {
       const response = await axios.post(
@@ -150,7 +176,20 @@ function OrderForm() {
     } catch (error) {
       console.error("API Error:", error);
       alert("Siparişiniz gönderilirken bir hata oluştu.");
+    } finally {
+      console.log("API çağrısı tamamlandı");
     }
+  };
+
+  const isOrderButtonDisabled = () => {
+    return (
+      state.checkboxSelections.length < 4 ||
+      state.checkboxSelections.length > 10 ||
+      state.count < 1 ||
+      !state.size ||
+      !state.doughThickness ||
+      Boolean(state.errors)
+    );
   };
 
   return (
@@ -320,7 +359,6 @@ function OrderForm() {
               </tbody>
             </Table>
           </div>
-
           <div className="buttons">
             <div className="buttongroup">
               <Button
@@ -345,16 +383,10 @@ function OrderForm() {
             <Button
               color="warning"
               size="lg"
-              onClick={decreaseCount}
+              type="submit"
               className="btn-lg"
-              disabled={
-                state.checkboxSelections.length < 4 ||
-                state.checkboxSelections.length > 10 ||
-                state.count < 1 ||
-                !state.size ||
-                !state.doughThickness ||
-                !state.errors
-              }
+              disabled={isOrderButtonDisabled()}
+              onClick={() => console.log("Sipariş Ver düğmesine tıklandı")}
             >
               SİPARİŞ VER
             </Button>
