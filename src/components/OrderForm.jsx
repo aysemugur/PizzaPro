@@ -1,6 +1,7 @@
 import { Button, FormGroup, Input, Table, Label } from "reactstrap";
 import { useState } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function OrderForm() {
   const initialIngredients = [
@@ -31,6 +32,8 @@ function OrderForm() {
     total: 85.5,
     choose: 0,
   });
+
+  const history = useHistory();
 
   const calculatePrice = (checkboxSelections, count) => {
     const price = 5;
@@ -144,7 +147,7 @@ function OrderForm() {
   };
 
   const submitOrder = async (event) => {
-    event.preventDefault(); //
+    event.preventDefault();
 
     if (!validateForm()) {
       return;
@@ -172,7 +175,7 @@ function OrderForm() {
         orderData
       );
       console.log("API Response:", response.data);
-      alert("Siparişiniz başarıyla gönderildi!");
+      history.push("/Success");
     } catch (error) {
       console.error("API Error:", error);
       alert("Siparişiniz gönderilirken bir hata oluştu.");
@@ -386,7 +389,7 @@ function OrderForm() {
               type="submit"
               className="btn-lg"
               disabled={isOrderButtonDisabled()}
-              onClick={() => console.log("Sipariş Ver düğmesine tıklandı")}
+              onClick={submitOrder}
             >
               SİPARİŞ VER
             </Button>

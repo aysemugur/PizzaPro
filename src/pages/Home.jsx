@@ -18,7 +18,6 @@ function Home() {
           ACIKTIM
         </Button>
       </div>
-      <div className="back-image"></div>
     </div>
   );
 }

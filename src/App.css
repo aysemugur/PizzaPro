@@ -1,9 +1,10 @@
 
-@media (max-width:540px) {
+@media (min-width:576px) {
 
 .fullpage{
     min-width: 540px;
-    height: 100%;
+    margin:0 auto;
+    height: 100vh;
     padding:0;
     font-size: 16px;
     color:rgba(41,41,41,1);
@@ -28,18 +29,6 @@
     gap: 26px;
     letter-spacing: 1.5px;
     width: 398px;
-    
-  }
-
-  .back-image{
-    background-position: bottom;
-    background-repeat: no-repeat;
-    background-size:cover;
-    background-image: url("https://s3-alpha-sig.figma.com/img/2b78/c96a/4a4acb450e3bbb3750c05c017efa1f61?Expires=1724630400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ZA1BTpO-ZAKR74wRI9jYyvNYBF3X2Nio-slH3SxdWBpBumNdEz8aDOZsiJJbq0tU47rJVIzKnwalV~AV21mYT3~GwUJY4jitKnR380es2Vctrq7DCK2Ahtkh-bqRhfHohT288bJWzBEbRoCj0A6hK8MfX4yJf1AcVS8Mkpx7lkOshkGDbNbvBZo1U3ZTvFayBXQi-64EXezi18P72MiKYb1x0ZA8EKJG~aJEe8~t50nEPTPnRGCDiJk1sle5yZeaN3PXil5xjBdBTrNE4P2LrQweJ2OKMfgj9qGy4WSd05ZIerwDvLw3U8s1yAW9OYASHJWGEzbpqw2V40-Cv9l9kA__"); 
-    width: 100%;
-    margin: 0;
-    height: 400px;
-    
   }
 
   h2{
@@ -73,7 +62,7 @@
 
   .headertop{
     background-color: rgba(206, 40, 41, 1);
-  padding: 5rem;
+  padding: 3.7rem;
   color: white;
   font-size: 20px;
   justify-content: center;
@@ -82,7 +71,8 @@
 
   .form{
   min-width: 540px;
-  padding: 28px 38px;
+  padding: 28px 60px;
+  margin:0 auto;
   font-size: 20px;
   display: flex;
   flex-direction: column;
@@ -104,7 +94,7 @@
   .aciklama{
     position: absolute;
     left:60px;
-    top:162px;
+    top:140px;
     font-size:20px;
     font-weight:400;
     font-family: Barlow;
@@ -263,4 +253,6 @@
     padding: 16px 32px;
     flex: 1;
   }
+
 }
+
