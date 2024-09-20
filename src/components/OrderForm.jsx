@@ -199,7 +199,10 @@ function OrderForm() {
     <div className="orderpage">
       <div className="headertop">
         <h2>Teknolojik Yemekler</h2>
-        <p className="aciklama">
+        <p
+          className="aciklama"
+          style={{ marginRight: "190px", marginTop: "36px" }}
+        >
           Anasayfa - <b>Sipariş Oluştur</b>
         </p>
       </div>
